@@ -1,0 +1,23 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Welcome!{% endblock title %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'website/welcome.css'%}" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700&display=swap" rel="stylesheet">
+{% endblock style %} 
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="left col-lg-8">
+                <div class="logo">
+                </div>
+                <div class="name d-flex justify-content-center">
+                EMOTABLE.
+                </div>
+            </div>
+            <div class="right col-lg-4">
+
+            </div>
+        </div>
+    </div>
+{% endblock body %}

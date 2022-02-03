@@ -1,0 +1,38 @@
+.left {
+    background-color: #FAE38D;
+    min-height: 100vh;
+}
+
+.logo {
+    height: 30%;
+    width: 100%;
+    background-image: url("/media/home_pageGIF.gif");
+    background-repeat: no-repeat;
+    background-size: 25vw 30vh;
+}
+
+.name{
+    font-family: 'Playfair Display SC', serif;
+    font-size: 7vw;
+}
+
+.right {
+    background-color: #000000;
+    min-height: 100vh;
+}
+
+@media(max-width:992px){
+    .name{
+        font-size: 10vw;
+    }
+    .logo{
+        height: 40%;
+        background-size: 50vw 40vh;
+    }
+}
+
+@media(max-width:860px){
+    .name{
+        font-size: 14vw;
+    }
+}
