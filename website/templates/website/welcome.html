@@ -22,8 +22,30 @@
                 <div class="row justify-content-center">
                     <div class="col-8 d-flex justify-content-center">
                         <button type="button" class="btn btn-light google_button">
-                        {% include 'website/googleIcon.html' %}
-                        <span class="ml-2">SIGN IN WITH GOOGLE<span></button>
+                            {% include 'website/googleIcon.html' %}
+                            <span class="ml-2">SIGN IN WITH GOOGLE<span>
+                        </button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <h6 class="or m-3">or</h6>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-8 d-flex justify-content-center text-center">
+                        <form method="post">
+                        {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="form-group">
+                                {{ form.username }}
+                                {{ form.username.errors }}
+
+                            </div>
+                            <div class="form-group">
+                                {{ form.password }}
+                                {{ form.password.errors }}
+                            </div>
+                            <button type="submit" class="btn btn-outline-light round_border px-4">Sign in</button>
+                        </form>
                     </div>
                 </div>
             </div>
