@@ -12,6 +12,14 @@ git clone https://github.com/hinalpujara/Emotable.git
 ```
 cd Emotable
 ```
+* Install virtual environment using the following command
+```
+ pip install virtualenv
+```
+* Create new virtual environment
+```
+python -m venv venv
+```
 * Activate the virtual environment
 ```
 venv\Scripts\activate.bat
