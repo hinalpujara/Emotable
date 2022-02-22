@@ -21,6 +21,18 @@
     min-height: 100vh;
 }
 
+.joinTag{
+    font-weight: bold;
+    color: white;
+    font-size: 2.5vw;
+    /* font-family: 'Playfair Display SC', serif; */
+}
+
+.google_button{
+    border-radius: 25px !important;
+    width: 100%;
+}
+
 @media(max-width:992px){
     .name{
         font-size: 10vw;
