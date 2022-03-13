@@ -34,18 +34,35 @@
                     <div class="col-8 d-flex justify-content-center text-center">
                         <form method="post">
                         {% csrf_token %}
-                            {{ form.non_field_errors }}
                             <div class="form-group">
                                 {{ form.username }}
-                                {{ form.username.errors }}
 
                             </div>
                             <div class="form-group">
                                 {{ form.password }}
-                                {{ form.password.errors }}
                             </div>
                             <button type="submit" class="btn btn-outline-light round_border px-4">Sign in</button>
                         </form>
+                    </div>
+                </div>
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-dismissible fade show text-center" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% for error in form.errors %}
+                <div class="alert alert-dismissible fade show text-center" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+               <div class="row justify-content-center">
+                    <div class="col-8 noAccount">
+                        Don't have an account?
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                    <a href="{% url 'register' %}" class="btn btn-outline-light round_border px-4 signup">Sign up</a>
                     </div>
                 </div>
             </div>

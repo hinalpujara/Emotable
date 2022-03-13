@@ -2,16 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 
+GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other')
+    )
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_picture = models.ImageField(default='default.png',upload_to='profile_pics')
-    gender = models.CharField(max_length=10)
-    mobile_no = models.CharField(max_length=10)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     bio = models.CharField(max_length=1000)
     birth_date = models.DateField(null=True)
 
-    REQUIRED_FIELDS = ['profile_picture','gender','mobile_no','city','birth_date','username']
+    REQUIRED_FIELDS = ['gender','birth_date']
 
     def __str__(self):
         return str(self.user.username)

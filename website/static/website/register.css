@@ -1,0 +1,75 @@
+.register {
+    background-color: var(--base);
+    min-height: 100vh;
+    padding: 5vh 0;
+}
+
+.container {
+    width: 70% !important;
+    background-color: black;
+    min-height: 90vh !important;
+    border-radius: 30px;
+}
+
+.joinTag{
+    font-weight: bold;
+    color: white;
+    font-size: 2vw;
+}
+
+hr{
+    margin-top: 0.25rem !important;
+}
+
+.google_button{
+    border-radius: 25px !important;
+    width: 50%;
+    font-size: 1.15vw;
+}
+
+.or{
+    color: #5C5151;
+    position: relative;
+   }
+ 
+.or::before{
+    content: "  _______________  ";
+    color: #5C5151; 
+    position: absolute;
+    right: 100%;
+    top: -35%;
+    padding-right: 5px;
+}
+ 
+.or::after{
+    content: "  _______________  ";
+    color: #5C5151; 
+    position: absolute;
+    left: 100%;
+    top: -35%;
+    padding-left: 5px;
+}
+
+.round_border {
+    border-radius: 25px !important;
+}
+
+.alert{
+    margin-top: 1rem;
+    font-size: 12px;
+    padding: 0.5rem !important;
+    background-color: var(--danger);
+    color: white;
+    margin-bottom: -30px;
+}
+
+.haveAccount{
+    color: white;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.signin{
+    margin-top: 10px;
+    /* width: 100%; */
+}
