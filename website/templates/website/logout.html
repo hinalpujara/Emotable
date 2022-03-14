@@ -1,0 +1,11 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Logged out{% endblock title %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'website/home.css'%}" />
+{% endblock style %} 
+{% block body %}
+<div class="d-flex justify-content-center align-items-center pt-5">
+<a class="btn btn-outline-secondary" href="{% url 'welcome' %}">Login in again</a>
+</div>
+{% endblock body %}

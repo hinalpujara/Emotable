@@ -1,0 +1,24 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'website/home.css'%}" />
+{% endblock style %} 
+{% block body %}
+<div class="row">
+    <div class="left col-3">
+    <div class="text-center welcome p-2">
+        Welcome {{ user.first_name |title}} 
+    </div>
+    <div class="row p-3 signOut d-flex justify-content-center">
+        <a class="btn bg-transparent signoutButton" href="{% url 'logout'  %}">
+            <img src="{{user.profile.profile_picture.url}}" alt="Profile picture">
+            <span class="pt-3 signOutText">SIGN OUT</span>
+        </a>
+    </div>
+    </div>
+    <div class="right">
+        {% comment %} {{ user.first_name }}   {% endcomment %}
+    </div>
+</div>
+{% endblock body %}

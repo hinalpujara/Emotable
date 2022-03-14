@@ -9,7 +9,7 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
     username = UsernameField(widget=forms.TextInput(
-        attrs={'class': 'form-control round_border', 'placeholder': 'Email'}))
+        attrs={'class': 'form-control round_border', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control round_border',

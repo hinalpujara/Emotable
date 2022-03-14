@@ -72,7 +72,7 @@ form {
 .alert{
     margin-top: 1rem;
     font-size: 12px;
-    padding: 0.5rem !important;
+    padding: 0.5rem 0.5rem 0rem 0.5rem !important;
     background-color: var(--danger);
     color: white;
     margin-bottom: -30px;
