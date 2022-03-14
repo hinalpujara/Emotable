@@ -45,16 +45,18 @@
                         </form>
                     </div>
                 </div>
-                {% for error in form.non_field_errors %}
+                {% if form.non_field_errors %}
                 <div class="alert alert-dismissible fade show text-center" role="alert">
-                    {{ error }}
+                    {{ form.non_field_errors }}
                 </div>
-                {% endfor %}
-                {% for error in form.errors %}
+                {% endif %}
+                {% comment %} {% for error in form.errors %} {% endcomment %}
+                {% if form.errors %}
                 <div class="alert alert-dismissible fade show text-center" role="alert">
-                    {{ error }}
+                    {{ form.errors }}
                 </div>
-                {% endfor %}
+                {% endif %}
+                {% comment %} {% endfor %} {% endcomment %}
                <div class="row justify-content-center">
                     <div class="col-8 noAccount">
                         Don't have an account?

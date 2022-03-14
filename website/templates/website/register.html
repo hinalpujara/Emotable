@@ -10,7 +10,7 @@
             <div class="pt-2 text-center joinTag">Join Emotable Today.</div>
             <hr style="background-color:white;"></hr>
             <div class="row justify-content-center">
-                <div class="col-8 d-flex justify-content-center">
+                <div class="col-lg-8 d-flex justify-content-center">
                     <button type="button" class="btn btn-light google_button">
                         {% include 'website/googleIcon.html' %}
                         <span class="ml-2">SIGN IN WITH GOOGLE<span>
@@ -23,10 +23,10 @@
             <form method="post">
                         {% csrf_token %}
                         <div class="row justify-content-center">
-                            <div class="col-4 form-group">
+                            <div class="col-8 col-lg-4 form-group">
                                 {{ form.first_name }}
                             </div>
-                            <div class="col-4 form-group">
+                            <div class="col-8 col-lg-4 form-group">
                                 {{ form.last_name }}
                             </div>
                         </div>
@@ -36,21 +36,21 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-3 form-group">
+                            <div class="col-lg-3 col-8 form-group">
                                 {{ form.username }}
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-lg-3 col-sm-5 col-8 form-group">
                                 {{ p_form.birth_date }}
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-lg-2 col-sm-3 col-8 form-group">
                                 {{ p_form.gender }}
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-4 form-group">
+                            <div class="col-8 col-lg-4 col-md-4 form-group">
                                 {{ form.password1 }}
                             </div>
-                            <div class="col-4 form-group">
+                            <div class="col-8 col-lg-4 col-md-4 form-group">
                                 {{ form.password2 }}
                             </div>
                         </div>
@@ -59,16 +59,16 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-8">
-                        {% if form.errors %}
-                            {% for field in form%}
-                                {% for error in field.errors %} 
-                                    <div class="alert alert-dismissible fade show text-center" role="alert">
-                                        • {{ error|escape }}
+                                {% if form.errors %}
+                                    <div class="alert alert-dismissible fade show text-center mt-3" role="alert">
+                                        {% for field in form%}
+                                            {% for error in field.errors %} 
+                                                    • {{ error|escape }} <br>
+                                            {% endfor %}
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endif %}
-                        </div>
+                                {% endif %}
+                            </div>
                         </div>
                         </form>
                         <div class="row text-center justify-content-center">

@@ -55,21 +55,34 @@ hr{
 }
 
 .alert{
-    margin-top: 1rem;
     font-size: 12px;
     padding: 0.5rem !important;
     background-color: var(--danger);
     color: white;
-    margin-bottom: -30px;
+    margin-bottom: -10px;
 }
 
 .haveAccount{
     color: white;
     font-weight: 500;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .signin{
     margin-top: 10px;
     /* width: 100%; */
+}
+
+@media(max-width:992px){
+    .google_button{
+        width: 60%;
+        font-size: 2vw;
+    }
+}
+
+@media(max-width:768px){
+    .google_button{
+        width: 75%;
+        font-size: 3vw;
+    }
 }
