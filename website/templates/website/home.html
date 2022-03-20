@@ -3,13 +3,42 @@
 {% block title %}Home{% endblock title %}
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'website/home.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'website/post.css'%}" />
 {% endblock style %} 
 {% block body %}
+
+{% comment %} Add post popup {% endcomment %}
+<div class="modal fade" id="postContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add a post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="post">
+        {% csrf_token %}
+            <div class="modal-body">
+                {{post_form}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+       </form>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
     <div class="left col-3">
     <div class="text-center welcome p-2">
-        Welcome {{ user.first_name |title}} 
+    <img src="/media/logo.png"></img>
+        <span class="ml-3">Welcome {{ user.first_name |title}} </span>
     </div>
+    <a type="button" class="btn btn-dark btn-primary-outline mt-5" data-toggle="modal" data-target="#postContent">Emote</a>
     <div class="row p-3 signOut d-flex justify-content-center">
         <a class="btn bg-transparent signoutButton" href="{% url 'logout'  %}">
             <img src="{{user.profile.profile_picture.url}}" alt="Profile picture">
@@ -17,7 +46,9 @@
         </a>
     </div>
     </div>
-    <div class="right">
+    <div class="right col-9">
+        <div class="my-2 mt-5 post">
+        </div>
         {% comment %} {{ user.first_name }}   {% endcomment %}
     </div>
 </div>

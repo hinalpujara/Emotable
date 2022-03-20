@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils import timezone
 
 GENDER_CHOICES = (
         ('M', 'Male'),
@@ -29,3 +30,20 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.profile_picture.path)
+
+class Post(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    content = models.TextField()
+    time_posted = models.DateTimeField(default=timezone.now)
+    emotion = models.TextField()
+
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    time_liked = models.DateTimeField(default=timezone.now)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    time_commented = models.DateTimeField(default=timezone.now)
+    content = models.TextField()

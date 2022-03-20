@@ -1,17 +1,15 @@
 from django.shortcuts import render, redirect
-from .forms import ProfileRegisterForm, UserRegisterForm
+from .forms import ProfileRegisterForm, UserRegisterForm, PostContent
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse  
-from django.contrib.auth import login, authenticate  
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.encoding import force_bytes, force_str  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.template.loader import render_to_string  
 from .tokens import account_activation_token  
-from django.contrib.auth.models import User  
 from django.core.mail import EmailMessage
-from django.db import models
 from django.contrib.auth import get_user_model
+import pickle
 
 # Create your views here.
 
@@ -48,7 +46,17 @@ def register(request):
 
 @login_required
 def home(request):
-    return render(request,'website/home.html')
+    if request.method == 'POST':
+        post_form = PostContent(request.POST)
+        post = post_form.save(commit=False)
+        loaded_model = pickle.load(open("model/emotion.pkl", 'rb'))
+        print(loaded_model.predict(post.content))
+        post.user = request.user
+        post.save()
+        return render(request,'website/home.html', {'post_form': post_form})
+    else:
+        post_form = PostContent()
+    return render(request,'website/home.html', {'post_form': post_form})
 
 
 def activate(request, uidb64, token):  

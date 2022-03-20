@@ -1,8 +1,9 @@
+from pyexpat import model
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm,UsernameField
 from django.db.models import fields
-from .models import GENDER_CHOICES, Profile
+from .models import GENDER_CHOICES, Post, Profile
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -61,3 +62,10 @@ class ProfileRegisterForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ["birth_date","gender"]
+
+class PostContent(forms.ModelForm):
+    content = forms.CharField()
+
+    class Meta:
+        model = Post
+        fields = ["content"]

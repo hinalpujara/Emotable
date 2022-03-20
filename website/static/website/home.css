@@ -9,10 +9,9 @@ body{
 .left {
     background-color: black;
     height: 100vh;
-    position: fixed;
+    position: sticky;
     z-index: 1;
     top: 0;
-    left: 0;
 }
 
 .welcome {
