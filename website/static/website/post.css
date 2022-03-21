@@ -1,3 +1,22 @@
-.post{
-    background-color: blue !important;
+.postContainer{
+    background-color: white !important;
+    border-color: black;
+    border-width: thick;
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.emotion {
+    background-color: rgb(23, 204, 23);
+    border-radius: 10px;
+}
+
+.username{
+    color: rgb(95, 94, 94);
+    font-size: small;
+}
+
+.profile_image{
+    width: 50px;
+    height: 50px;
 }

@@ -10,6 +10,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 import pickle
+from .models import Post
 
 # Create your views here.
 
@@ -49,14 +50,16 @@ def home(request):
     if request.method == 'POST':
         post_form = PostContent(request.POST)
         post = post_form.save(commit=False)
-        loaded_model = pickle.load(open("model/emotion.pkl", 'rb'))
-        print(loaded_model.predict(post.content))
+        # loaded_model = pickle.load(open("model/emotion.pkl", 'rb'))
+        # post.emotion = loaded_model.predict(post.content)
+        post.emotion = "Happy"
         post.user = request.user
         post.save()
         return render(request,'website/home.html', {'post_form': post_form})
     else:
+        posts_list = Post.objects.all().order_by('-time_posted')
         post_form = PostContent()
-    return render(request,'website/home.html', {'post_form': post_form})
+        return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list})
 
 
 def activate(request, uidb64, token):  

@@ -46,10 +46,42 @@
         </a>
     </div>
     </div>
-    <div class="right col-9">
-        <div class="my-2 mt-5 post">
-        </div>
+    <div class="right col-9 mx-auto mt-4">
+        {% for post in posts_list %}
+          <div class="postContainer row my-2 mt-3">
+          <div class="col-2 text-center">
+          <div>
+          <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
+          </div>
+          <div>
+              <span class="username">@{{post.user.username}}</span>
+            </div>
+            <div>
+              {{post.user.first_name}} <span> {{post.user.last_name}}</span>
+            </div>
+          </div>
+          <div class="col-9">
+            <div>
+              {{post.content}}
+            </div>
+            <div class="text-right align-self-end mt-5">
+            <span class="mr-3"><button class="fas fa-volume-up fa-lg btn bg-transparent" id="{{post.content}}"></button></span>
+              <span class="emotion p-2 mr-2">{{post.emotion}}</span>
+            </div>
+          </div>
+          </div>
+        {% endfor %}
         {% comment %} {{ user.first_name }}   {% endcomment %}
     </div>
 </div>
 {% endblock body %}
+
+{% block jquery %}
+jQuery(document).on('click', ".fas", function(){
+    let speech = new SpeechSynthesisUtterance();
+  speech.lang = "en";
+  var $this = $(this);
+  speech.text = $this.attr('id');
+  window.speechSynthesis.speak(speech);
+});
+{% endblock jquery %}

@@ -19,7 +19,9 @@ body{
 }
 
 .right {
-    min-height: 120vh;
+    /* min-height: 120vh; */
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 img {
@@ -48,4 +50,10 @@ img {
 
 .signoutButton:hover{
     background: var(--hover) !important;
+}
+
+@media(max-width:768px){
+    .left{
+        display: none;
+    }
 }
