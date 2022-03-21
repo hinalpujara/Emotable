@@ -11,6 +11,8 @@ from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 import pickle
 from .models import Post
+from .forms import UserLoginForm
+from django.contrib.auth import views as auth_views
 
 # Create your views here.
 
@@ -22,6 +24,7 @@ def register(request):
             user = form.save(commit=False)
             profile = p_form.save(commit=False)
             profile.user = user
+            user.is_active = False
             user.save()
             profile.save()
             current_site = get_current_site(request)  
@@ -37,7 +40,7 @@ def register(request):
                         mail_subject, message, to=[to_email]  
             )  
             email.send()  
-            return HttpResponse('Please confirm your email address to complete the registration')  
+            return render(request,'website/register.html',{'form': form, 'p_form': p_form, 'modal': True}) 
         else:
             return render(request,'website/register.html',{'form': form, 'p_form': p_form})
     else:
@@ -72,6 +75,9 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):  
         user.is_active = True  
         user.save()  
+        # posts_list = Post.objects.all().order_by('-time_posted')
+        # post_form = PostContent()
+        # return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list})
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')  
     else:  
         return HttpResponse('Activation link is invalid!')  
