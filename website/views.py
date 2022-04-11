@@ -13,6 +13,8 @@ import pickle
 from .models import Post
 from .forms import UserLoginForm
 from django.contrib.auth import views as auth_views
+from django.contrib import messages
+
 
 # Create your views here.
 
@@ -28,7 +30,7 @@ def register(request):
             user.save()
             profile.save()
             current_site = get_current_site(request)  
-            mail_subject = 'Activation link has been sent to your email id'  
+            mail_subject = 'Activation link'  
             message = render_to_string('website/acc_active_email.html', {  
                 'user': user,  
                 'domain': current_site.domain,  
@@ -78,6 +80,7 @@ def activate(request, uidb64, token):
         # posts_list = Post.objects.all().order_by('-time_posted')
         # post_form = PostContent()
         # return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list})
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')  
+        messages.add_message(request, messages.SUCCESS, 'account activated successfully')
+        return redirect("website/welcome") 
     else:  
         return HttpResponse('Activation link is invalid!')  

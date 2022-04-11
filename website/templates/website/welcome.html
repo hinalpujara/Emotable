@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Welcome!{% endblock title %}
 {% block style %}
+{% load socialaccount %}
 <link rel="stylesheet" type="text/css" href="{% static 'website/welcome.css'%}" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700&display=swap" rel="stylesheet">
 {% endblock style %} 
@@ -43,7 +44,7 @@
                 <br>
                 <div class="row justify-content-center">
                     <div class="col-8 d-flex justify-content-center">
-                        <a type="button" class="btn btn-light google_button" href="/accounts/google/login/">
+                        <a type="button" class="btn btn-light google_button" href="{% provider_login_url 'google' %}">
                             {% include 'website/googleIcon.html' %}
                             <span class="ml-2">SIGN IN WITH GOOGLE<span>
                             </a>

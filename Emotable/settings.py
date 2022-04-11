@@ -158,6 +158,10 @@ MEDIA_URL = '/media/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SITE_ID = 2
 LOGIN_REDIRECT_URL= 'home'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'welcome'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'register'
+
+# LOGOUT_REDIRECT_URL= ''
 LOGIN_URL = 'welcome'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
