@@ -17,38 +17,43 @@ from django.contrib import messages
 
 
 # Create your views here.
+emotions = ['neutral','worry','happiness','sadness','love','surprise','fun','relief','hate','empty','enthusiasm','boredom','anger']
+emotions.sort()
 
 def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        p_form = ProfileRegisterForm(request.POST)
-        if form.is_valid() and p_form.is_valid():
-            user = form.save(commit=False)
-            profile = p_form.save(commit=False)
-            profile.user = user
-            user.is_active = False
-            user.save()
-            profile.save()
-            current_site = get_current_site(request)  
-            mail_subject = 'Activation link'  
-            message = render_to_string('website/acc_active_email.html', {  
-                'user': user,  
-                'domain': current_site.domain,  
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
-                'token':account_activation_token.make_token(user),  
-            })  
-            to_email = form.cleaned_data.get('email')  
-            email = EmailMessage(  
-                        mail_subject, message, to=[to_email]  
-            )  
-            email.send()  
-            return render(request,'website/register.html',{'form': form, 'p_form': p_form, 'modal': True}) 
-        else:
-            return render(request,'website/register.html',{'form': form, 'p_form': p_form})
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        form = UserRegisterForm()
-        p_form = ProfileRegisterForm()
-    return render(request,'website/register.html',{'form': form, 'p_form': p_form})
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            p_form = ProfileRegisterForm(request.POST)
+            if form.is_valid() and p_form.is_valid():
+                user = form.save(commit=False)
+                profile = p_form.save(commit=False)
+                profile.user = user
+                user.is_active = False
+                user.save()
+                profile.save()
+                current_site = get_current_site(request)  
+                mail_subject = 'Activation link'  
+                message = render_to_string('website/acc_active_email.html', {  
+                    'user': user,  
+                    'domain': current_site.domain,  
+                    'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
+                    'token':account_activation_token.make_token(user),  
+                })  
+                to_email = form.cleaned_data.get('email')  
+                email = EmailMessage(  
+                            mail_subject, message, to=[to_email]  
+                )  
+                email.send()  
+                return render(request,'website/register.html',{'form': form, 'p_form': p_form, 'modal': True}) 
+            else:
+                return render(request,'website/register.html',{'form': form, 'p_form': p_form})
+        else:
+            form = UserRegisterForm()
+            p_form = ProfileRegisterForm()
+        return render(request,'website/register.html',{'form': form, 'p_form': p_form})
 
 @login_required
 def home(request):
@@ -60,11 +65,17 @@ def home(request):
         post.emotion = "Happy"
         post.user = request.user
         post.save()
-        return render(request,'website/home.html', {'post_form': post_form})
+        return render(request,'website/home.html', {'post_form': post_form,'emotions':emotions})
     else:
         posts_list = Post.objects.all().order_by('-time_posted')
         post_form = PostContent()
-        return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list})
+        for post in posts_list:
+            for liked in post.like_set.all():
+                if request.user.id == liked.user.id:
+                    print(True)
+                else:
+                    print(False)
+        return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
 
 
 def activate(request, uidb64, token):  
@@ -84,3 +95,13 @@ def activate(request, uidb64, token):
         return redirect("website/welcome") 
     else:  
         return HttpResponse('Activation link is invalid!')  
+
+def search(request):
+    if request.method == 'POST':
+        return
+
+def authRegister(request):
+    return redirect('register')
+
+def googleRegister(request):
+    return HttpResponse('Hola')  

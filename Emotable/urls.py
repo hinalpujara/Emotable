@@ -18,10 +18,12 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls.conf import include
+from website.views import authRegister
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
+    path('accounts/login/',authRegister, name='authRegister'),
     path("accounts/", include("allauth.urls")),
     
     # path('home/',include("googleauthentication.urls"))

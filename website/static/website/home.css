@@ -21,7 +21,13 @@ body{
 .right {
     /* min-height: 120vh; */
     padding-left: 2rem;
-    padding-right: 2rem;
+}
+
+.search{
+    background-color: var(--gray);
+    width: 90%;
+    color: white;
+    border-radius: 20px;
 }
 
 img {
