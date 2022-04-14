@@ -1,0 +1,106 @@
+.editprof {
+    background-color: var(--base);
+    min-height: 100vh;
+    padding: 5vh 0;
+}
+
+.container {
+    width: 70% !important;
+    background-color: black;
+    min-height: 80vh !important;
+    border-radius: 30px;
+}
+
+.joinTag{
+    font-weight: bold;
+    color: white;
+    font-size: 2vw;
+}
+
+hr{
+    margin-top: 0.25rem !important;
+}
+
+.round_border {
+    border-radius: 25px !important;
+}
+
+
+
+#pic{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50% !important;
+
+}
+
+#file{
+    display: none;
+}
+
+#uploadbtn{
+    height: 3rem; 
+    width: 10rem; 
+    position: absolute;
+    text-align: center;
+    font-size: 15px;
+    color: wheat;
+    padding-top: 10px;
+    margin-top: -40px;
+    background-color: rgba(1, 1, 1, 0.7);
+    /* background-color: white; */ 
+    line-height: 10px;
+    cursor: pointer;
+    display: none;
+    
+} 
+
+h6{
+    font-size: 18px;
+}
+
+@media (max-width:992px){
+    #pic{
+        height: 7rem;
+        width: 7rem;
+    }
+    #uploadbtn{
+        position: absolute;
+        text-align: center;
+        font-size: 7px;
+        /* margin-left: 20px; */
+        margin-top: -20px;
+        height: 2rem;
+        width: 7rem; 
+        padding-top: 4px;
+    
+        
+    }
+    .container {
+        min-height: 50vh !important;
+    }
+    h6{
+        font-size: 12px;
+    }
+}
+
+@media(max-width:768px){
+    #pic{
+        height: 5rem;
+        width: 5rem;
+    }
+    #uploadbtn{
+        position: absolute;
+        text-align: center;
+        font-size: 5px;
+        /* margin-left: 20px; */
+        margin-top: -17px;
+        height: 2rem;
+        width: 5rem; 
+        
+    }
+    h6{
+        font-size: 8px;
+    }
+}
+
