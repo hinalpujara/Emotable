@@ -69,12 +69,6 @@ def home(request):
     else:
         posts_list = Post.objects.all().order_by('-time_posted')
         post_form = PostContent()
-        for post in posts_list:
-            for liked in post.like_set.all():
-                if request.user.id == liked.user.id:
-                    print(True)
-                else:
-                    print(False)
         return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
 
 

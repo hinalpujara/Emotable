@@ -67,14 +67,8 @@
               {{post.content}}
             </div>
             <div class="text-right align-self-end mt-5">
-            {% for liked in post.like_set.all %}
-              {% if user.id == liked.user.id%}
-                <span><button class="fas fa-heart fa-lg btn bg-transparent" href="{% url 'post-like' post.id %}"></button></span>
-              {% else %}
-              {% endif %}
-            {% empty %}
-              <span><button class="far fa-heart fa-lg btn bg-transparent p-1" href="{% url 'post-like' post.id %}"></button></span>
-            {% endfor %}
+              {% comment %} <span><button class="fas fa-heart fa-lg btn bg-transparent" href="{% url 'post-like' post.id %}"></button></span> {% endcomment %}
+              <span><button class="far fa-heart fa-lg btn bg-transparent p-1" id="post-{{post.id}}" onclick="like({{post.id}});"></button></span>
               <span><button class="far fa-comment fa-lg btn bg-transparent p-1 mr-2"></button></span>
               <span class="emotion p-2 mr-1">{{post.emotion}}</span>
             <span><button class="fas fa-volume-up fa-lg btn bg-transparent" id="{{post.content}}"></button></span>
@@ -100,9 +94,24 @@ jQuery(document).on('click', ".fa-volume-up", function(){
   window.speechSynthesis.speak(speech);
 });
 
-{% comment %} $( function() {
-    $("#search").autocomplete({
+$(document).ready(function() {
+  $(function(){
+    {% comment %} $("#search").autocomplete({
       source: {{emotions}}
-    });
-  } ); {% endcomment %}
+    }); {% endcomment %}
+    {% for post in posts_list %}
+      {% for liked in post.like_set.all %}
+              {% if user.id == liked.user.id%}
+                  $("#post-"+{{ post.id|stringformat:"i"}}).removeClass("far");
+                  $("#post-"+{{ post.id|stringformat:"i"}}).addClass("fas");
+              {% endif %}
+      {% endfor %}
+    {% endfor %}
+  });
+});
+
+  function like(post_id) {
+      $("#post-"+post_id.toString()).removeClass("far");
+      $("#post-"+post_id.toString()).addClass("fas");
+}
 {% endblock jquery %}
