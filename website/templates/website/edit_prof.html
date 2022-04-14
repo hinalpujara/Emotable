@@ -20,6 +20,7 @@
         <hr style="background-color:white;">
         </hr>
         <form method="post">
+        {% csrf_token %}
             <div class="row justify-content-center mb-3 mt-4 ">
                 <div class="profpic">
                     <img class="border" src="/media/profile_pics/pic.jpg" alt="" id="pic">

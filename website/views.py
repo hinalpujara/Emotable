@@ -10,7 +10,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 import pickle
-from .models import Post
+from .models import Like, Post
 from .forms import UserLoginForm
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
@@ -103,3 +103,21 @@ def googleRegister(request):
 def edit_prof(request):
     # form = editprofile(request.POST)
     return render(request, 'website/edit_prof.html')
+
+def likePost(request,pk):
+    if request.POST.get('action') == '':
+        post = Post(pk=pk)
+        like = Like(user=request.user,post=post)
+        like.save()
+        return redirect('home')
+    else:
+        return redirect('home')
+
+def unlikePost(request,pk):
+    if request.POST.get('action') == '':
+        user = request.user
+        post = Post.objects.get(pk=pk)
+        post.like_set.filter(user=user).delete()
+        return redirect('home')
+    else:
+        return redirect('home')

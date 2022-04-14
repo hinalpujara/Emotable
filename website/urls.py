@@ -11,5 +11,7 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(template_name='website/logout.html'),name="logout"), # temporary
     path('googleRegister/',views.googleRegister,name='googleRegister'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', activate, name='activate'),
-    path('edit/', views.edit_prof, name='edit-profile')
+    path('edit/', views.edit_prof, name='edit-profile'),
+    path('unlikePost/<int:pk>',views.unlikePost,name='unlikePost'),
+    path('likePost/<int:pk>',views.likePost,name='likePost'),
 ]

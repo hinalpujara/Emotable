@@ -109,9 +109,34 @@ $(document).ready(function() {
     {% endfor %}
   });
 });
-
   function like(post_id) {
-      $("#post-"+post_id.toString()).removeClass("far");
-      $("#post-"+post_id.toString()).addClass("fas");
-}
+    if($('.far').is("#post-"+post_id.toString()+".far")){
+       $("#post-"+post_id.toString()).removeClass("far").addClass("fas");
+        $.ajax({
+        type:'POST',
+        url:'{% url "likePost" pk=12 %}'.replace(/12/, post_id.toString()),
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: ''
+        },
+        success:function(json){
+            console.log("done!!");
+        },
+    });
+    } else {
+      $("#post-"+post_id.toString()).removeClass("fas").addClass("far");
+       $.ajax({
+        type:'POST',
+        url:'{% url "unlikePost" pk=12 %}'.replace(/12/, post_id.toString()),
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: ''
+        },
+        success:function(json){
+            console.log("done!!");
+        },
+    });
+    }
+  }
+
 {% endblock jquery %}
