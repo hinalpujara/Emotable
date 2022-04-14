@@ -10,5 +10,5 @@ urlpatterns = [
     path('home/',views.home,name='home'),
     path('logout/',auth_views.LogoutView.as_view(template_name='website/logout.html'),name="logout"), # temporary
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', activate, name='activate'),
-    
+    path('edit/', views.edit_prof, name='edit-profile')
 ]

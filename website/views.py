@@ -84,3 +84,7 @@ def activate(request, uidb64, token):
         return redirect("website/welcome") 
     else:  
         return HttpResponse('Activation link is invalid!')  
+
+
+def edit_prof(request):
+    return render(request, 'website/edit_profile.html')
