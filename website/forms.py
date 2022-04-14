@@ -69,3 +69,30 @@ class PostContent(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["content"]
+
+# class editprofile(UserCreationForm):
+#     fname = forms.CharField(required=True,widget=forms.TextInput(
+#         attrs={'class': 'form-control round_border', 'placeholder': 'First name'}))
+#     lname = forms.CharField(required=True,widget=forms.TextInput(
+#         attrs={'class': 'form-control round_border', 'placeholder': 'Last name'}))
+    
+#     username = forms.CharField(required=True,widget=forms.TextInput(
+#         attrs={'class': 'form-control round_border', 'placeholder': 'Username'}))
+    
+#     bdate = forms.DateField(widget=forms.TextInput(
+#         attrs={
+#             'type': 'date',
+#             'class':'form-control round_border',
+#             'placeholder':'Birth date'
+#         }
+#     ))
+#     gen = forms.CharField(widget=forms.Select(
+#         choices=GENDER_CHOICES,
+#         attrs={
+#             'class':'form-control round_border',
+#             'placeholder':'Gender'
+#         }))
+
+#     class Meta:
+#         model = User
+#         fields = ['fname','lname',"username",'bdate','gen']

@@ -107,4 +107,5 @@ def googleRegister(request):
     return HttpResponse('Hola')  
 
 def edit_prof(request):
-    return render(request, 'website/edit_profile.html')
+    # form = editprofile(request.POST)
+    return render(request, 'website/edit_prof.html')
