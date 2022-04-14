@@ -163,6 +163,8 @@ SOCIAL_AUTH_NEW_USER_REDIRECT_URL = 'register'
 
 # LOGOUT_REDIRECT_URL= ''
 LOGIN_URL = 'welcome'
+SOCIAL_FIRST_USER_REDIRECT_URL = 'googleRegister'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -176,3 +178,17 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'emotablebyhinpinpri@gmail.com'  
 EMAIL_HOST_PASSWORD = 'HinPinPri'  
 EMAIL_PORT = 587 
+
+# SOCIAL AUTH
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'users.views.save_profileee',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)

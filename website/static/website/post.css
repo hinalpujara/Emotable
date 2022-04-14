@@ -1,9 +1,40 @@
+.bubble{
+    background-color: white;
+    width: 50px;
+    height: 50px;
+}
+
 .postContainer{
+    position: relative;
     background-color: white !important;
     border-color: black;
     border-width: thick;
     border-radius: 20px;
     padding: 1rem;
+    margin-left: 50px !important;
+}
+
+.postContainer::before{
+    content: "";
+    position: absolute;
+    z-index:-1;
+    left: -22px;
+    top: 0;
+    width: 40px;
+    border-bottom: 35px solid white;
+    border-top-right-radius: 25px;
+}
+
+.postContainer::after{
+    content: "";
+    position: absolute;
+    z-index:-1;
+    left: -28px;
+    top: -3px;
+    height: 38px;
+    width: 28px;
+    background: var(--base);
+    border-top-right-radius: 20px;
 }
 
 .emotion {

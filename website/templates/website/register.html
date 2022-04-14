@@ -34,7 +34,8 @@
             <hr style="background-color:white;"></hr>
             <div class="row justify-content-center">
                 <div class="col-lg-8 d-flex justify-content-center">
-                    <a type="button" class="btn btn-light google_button" href="{% provider_login_url 'google' %}">
+                    {% comment %} <a type="button" class="btn btn-light google_button" href="{% provider_login_url 'google' %}"> {% endcomment %}
+                        <a type="button" class="btn btn-light google_button">
                         {% include 'website/googleIcon.html' %}
                         <span class="ml-2">SIGN UP WITH GOOGLE<span>
                     </a>

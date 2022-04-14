@@ -37,10 +37,12 @@ class Post(models.Model):
     time_posted = models.DateTimeField(default=timezone.now)
     emotion = models.TextField()
 
+
 class Like(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
     time_liked = models.DateTimeField(default=timezone.now)
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
