@@ -12,13 +12,10 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 import pickle
-<<<<<<< HEAD
 from .models import Post, Profile
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
-=======
 from .models import Like, Post
 from .forms import UserLoginForm
->>>>>>> 1a03741e2cbe37f9e1fc809596a1747b384fe2f1
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.views import generic
