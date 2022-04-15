@@ -59,7 +59,7 @@ def register(request):
             p_form = ProfileRegisterForm()
         return render(request,'website/register.html',{'form': form, 'p_form': p_form})
 
-# @login_required
+@login_required
 def home(request):
     if request.method == 'POST':
         post_form = PostContent(request.POST)
@@ -105,13 +105,24 @@ def authRegister(request):
 def googleRegister(request):
     return HttpResponse('Hola')  
 
+@login_required
 def edit_prof(request):
-    form = UserUpdateForm()
-    p_form = ProfileUpdateForm()
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid() and p_form.is_valid():
+            form.save()
+            p_form.save()
+            messages.success(request, 'Profile details updated.')
+            return redirect('edit-profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
     context = {
         'form' : form,
         'p_form' : p_form
     }
+    
     return render(request, 'website/edit_prof.html' ,context)
 
 def panel(request):
