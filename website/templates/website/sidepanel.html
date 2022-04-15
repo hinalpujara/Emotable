@@ -1,0 +1,62 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% block style %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'website/sidepanel.css'%}" />
+{% endblock style %}
+{% block body %}
+
+{% comment %} Side panel {% endcomment %}
+<div class="sidebar">
+    <div class="logo">
+        <a id="btn">
+            <img src="/media/logo.png"  class="logo-img" id="btn"></img>
+        </a>
+    </div>
+    <ul class="nav-list">
+        <li>
+            <a href="" class="home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="link-name">Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="" class="prof">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="link-name ">Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="" class="edit">
+                <i class="fa fa-edit"></i>
+                <span class="link-name ">Edit Profile</span>
+            </a>
+        </li>
+    </ul>
+    <div class="logout" id="log-out">
+        <a href="">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <span class="link-name">Log Out</span>
+        </a>
+    </div>
+</div>
+
+<div class="main-body">
+    {% block main-body %} 
+    
+    {% endblock main-body %}
+</div>
+<script>
+    const btn = document.querySelector("#btn");
+    const side = document.querySelector(".sidebar");
+    
+    btn.onclick = function(){
+        side.classList.toggle("active");
+    }
+    
+</script>
+
+
+
+{% endblock body %}
