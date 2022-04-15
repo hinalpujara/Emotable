@@ -1,6 +1,6 @@
 {% extends "website/base.html" %}
 {% load static %}
-{% block title %}Register now!{% endblock title %}
+{% block title %}Edit Profile{% endblock title %}
 {% load socialaccount %}
 {% block style %}
 <style>
@@ -14,46 +14,53 @@
 
 
 {% comment %} Main body {% endcomment %}
+{% include 'website/sidepanel.html' %}
 <div class="editprof">
     <div class="container shadow p-2">
         <div class="pt-2 text-center joinTag">Edit Profile</div>
         <hr style="background-color:white;">
         </hr>
         <form method="post">
+            {% csrf_token %}
             <div class="row justify-content-center mb-3 mt-4 ">
                 <div class="profpic">
                     <img class="border" src="/media/profile_pics/pic.jpg" alt="" id="pic">
                     <div>
-                        <input type="file" id="file">
+                        <input type="file" id="file" name='{{ p_form.profile_picture }}'>
                         <label class="text-center" for="file" id="uploadbtn"> Choose Photo</label>
                     </div>
                     <div>
-                        <h6 style="color: white;" class="mt-3">Change profile picture</h6>
+                        <h6 style="color: white;" class="mt-2 text-center">Profile Picture</h6>
                     </div>
                 </div>
                 
             </div>
-            <div class="row justify-content-center ">
+            <div class="row justify-content-center">
                 <div class="col-8 col-lg-4 form-group">
-                    <input type="text" class="form-control round_border" , placeholder="First name">
+                    {{ form.first_name }}
+                    <!-- <input type="text" class="form-control round_border" , placeholder="First name"> -->
                 </div>
                 <div class="col-8 col-lg-4 form-group">
-                    <input type="text" class="form-control round_border" , placeholder="Last name">
+                    {{ form.last_name }}
+                    <!-- <input type="text" class="form-control round_border" , placeholder="Last name"> -->
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-8 form-group">
-                    <input type="text" class="form-control round_border" , placeholder="Username">
+                    {{ form.username }}
+                    <!-- <input type="text" class="form-control round_border" , placeholder="Username"> -->
                 </div>
                 <div class="col-lg-3 col-sm-5 col-8 form-group">
-                    <input type='date' , class='form-control round_border' , placeholder='Birth date'>
+                    {{ p_form.birth_date }}
+                    <!-- <input type='date' , class='form-control round_border' , placeholder='Birth date'> -->
                 </div>
                 <div class="col-lg-2 col-sm-3 col-8 form-group">
-                    <select id="gender" name="gen" class='form-control round_border' , placeholder='Gender'>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
+                    {{ p_form.gender }}
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8 form-group align-items-center">
+                    {{p_form.bio}}
                 </div>
             </div>
             <div class="row justify-content-center">

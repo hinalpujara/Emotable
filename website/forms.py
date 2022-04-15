@@ -1,4 +1,6 @@
 from pyexpat import model
+from tkinter import Widget
+from attr import attr
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm,UsernameField
@@ -59,6 +61,8 @@ class ProfileRegisterForm(forms.ModelForm):
             'placeholder':'Gender'
         }))
 
+
+
     class Meta:
         model = Profile
         fields = ["birth_date","gender"]
@@ -70,29 +74,42 @@ class PostContent(forms.ModelForm):
         model = Post
         fields = ["content"]
 
-# class editprofile(UserCreationForm):
-#     fname = forms.CharField(required=True,widget=forms.TextInput(
-#         attrs={'class': 'form-control round_border', 'placeholder': 'First name'}))
-#     lname = forms.CharField(required=True,widget=forms.TextInput(
-#         attrs={'class': 'form-control round_border', 'placeholder': 'Last name'}))
+class UserUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(required=True,widget=forms.TextInput(
+        attrs={'class': 'form-control round_border', 'placeholder': 'First name'}))
+    last_name = forms.CharField(required=True,widget=forms.TextInput(
+        attrs={'class': 'form-control round_border', 'placeholder': 'Last name'}))
     
-#     username = forms.CharField(required=True,widget=forms.TextInput(
-#         attrs={'class': 'form-control round_border', 'placeholder': 'Username'}))
+    username = forms.CharField(required=True,widget=forms.TextInput(
+        attrs={'class': 'form-control round_border', 'placeholder': 'Username'}))
     
-#     bdate = forms.DateField(widget=forms.TextInput(
-#         attrs={
-#             'type': 'date',
-#             'class':'form-control round_border',
-#             'placeholder':'Birth date'
-#         }
-#     ))
-#     gen = forms.CharField(widget=forms.Select(
-#         choices=GENDER_CHOICES,
-#         attrs={
-#             'class':'form-control round_border',
-#             'placeholder':'Gender'
-#         }))
+    
+    class Meta:
+        model = User
+        fields = ['first_name','last_name',"username"]
+ 
 
-#     class Meta:
-#         model = User
-#         fields = ['fname','lname',"username",'bdate','gen']
+class ProfileUpdateForm(forms.ModelForm):
+    birth_date = forms.DateField(widget=forms.TextInput(
+        attrs={
+            'type': 'date',
+            'class':'form-control round_border',
+            'placeholder':'Birth date'
+        }
+    ))
+    gender = forms.CharField(widget=forms.Select(
+        choices=GENDER_CHOICES,
+        attrs={
+            'class':'form-control round_border',
+            'placeholder':'Gender'
+        }))
+
+    bio =  forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form-control round_border', 'placeholder': 'Bio',"rows":3, "cols":10}
+    ))
+    profile_picture = forms.ImageField()
+
+    class Meta:
+        model = Profile
+        fields = ['birth_date', 'gender', 'bio','profile_picture']
+

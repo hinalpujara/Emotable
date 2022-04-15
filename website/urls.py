@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from .forms import UserLoginForm
-from .views import activate  
+from .views import activate, panel
 
 urlpatterns = [
     path('',auth_views.LoginView.as_view(template_name="website/welcome.html",authentication_form=UserLoginForm,redirect_authenticated_user=True),name='welcome'),
@@ -11,5 +11,8 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(template_name='website/logout.html'),name="logout"), # temporary
     path('googleRegister/',views.googleRegister,name='googleRegister'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', activate, name='activate'),
-    path('edit/', views.edit_prof, name='edit-profile')
+    path('edit/', views.edit_prof, name='edit-profile'),
+    # path('panel/', views.panel, name= 'panel')
+    path('panel/', views.panel, name='sidepanel')
+    
 ]
