@@ -12,7 +12,12 @@ urlpatterns = [
     path('googleRegister/',views.googleRegister,name='googleRegister'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', activate, name='activate'),
     path('edit/', views.edit_prof, name='edit-profile'),
+<<<<<<< HEAD
     # path('panel/', views.panel, name= 'panel')
     path('panel/', views.panel, name='sidepanel')
     
+=======
+    path('unlikePost/<int:pk>',views.unlikePost,name='unlikePost'),
+    path('likePost/<int:pk>',views.likePost,name='likePost'),
+>>>>>>> 1a03741e2cbe37f9e1fc809596a1747b384fe2f1
 ]

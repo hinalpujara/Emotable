@@ -12,8 +12,13 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 import pickle
+<<<<<<< HEAD
 from .models import Post, Profile
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
+=======
+from .models import Like, Post
+from .forms import UserLoginForm
+>>>>>>> 1a03741e2cbe37f9e1fc809596a1747b384fe2f1
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.views import generic
@@ -71,12 +76,6 @@ def home(request):
     else:
         posts_list = Post.objects.all().order_by('-time_posted')
         post_form = PostContent()
-        for post in posts_list:
-            for liked in post.like_set.all():
-                if request.user.id == liked.user.id:
-                    print(True)
-                else:
-                    print(False)
         return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
 
 
@@ -122,3 +121,23 @@ def panel(request):
     return render(request, 'website/sidepanel.html')
 
 
+    # form = editprofile(request.POST)
+    return render(request, 'website/edit_prof.html')
+
+def likePost(request,pk):
+    if request.POST.get('action') == '':
+        post = Post(pk=pk)
+        like = Like(user=request.user,post=post)
+        like.save()
+        return redirect('home')
+    else:
+        return redirect('home')
+
+def unlikePost(request,pk):
+    if request.POST.get('action') == '':
+        user = request.user
+        post = Post.objects.get(pk=pk)
+        post.like_set.filter(user=user).delete()
+        return redirect('home')
+    else:
+        return redirect('home')
