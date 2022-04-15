@@ -16,4 +16,5 @@ urlpatterns = [
     path('panel/', views.panel, name='sidepanel'),
     path('unlikePost/<int:pk>',views.unlikePost,name='unlikePost'),
     path('likePost/<int:pk>',views.likePost,name='likePost'),
+    path('postComment/',views.postComment,name='postComment'),
 ]

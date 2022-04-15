@@ -1,0 +1,17 @@
+.modal-content {
+    border-radius: 2rem !important;
+}
+
+.comment{
+    width: 90%;
+    border-radius: 20px;
+}
+.modal-footer {
+    padding: 1rem !important;
+    justify-content: flex-start !important;
+}
+
+.modal-body {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}

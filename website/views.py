@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import ProfileRegisterForm, UserRegisterForm, PostContent
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse  
+from django.http import HttpResponse, JsonResponse
 from django.contrib.sites.shortcuts import get_current_site  
 from django.utils.encoding import force_bytes, force_str  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
@@ -11,12 +11,8 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token  
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
-import pickle
-from .models import Post, Profile
+from .models import Like, Post,Comment, Profile
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
-from .models import Like, Post
-from .forms import UserLoginForm
-from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.views import generic
 
@@ -128,10 +124,7 @@ def edit_prof(request):
 def panel(request):
     return render(request, 'website/sidepanel.html')
 
-
-    # form = editprofile(request.POST)
-    return render(request, 'website/edit_prof.html')
-
+@login_required
 def likePost(request,pk):
     if request.POST.get('action') == '':
         post = Post(pk=pk)
@@ -141,11 +134,25 @@ def likePost(request,pk):
     else:
         return redirect('home')
 
+@login_required
 def unlikePost(request,pk):
     if request.POST.get('action') == '':
         user = request.user
         post = Post.objects.get(pk=pk)
         post.like_set.filter(user=user).delete()
         return redirect('home')
+    else:
+        return redirect('home')
+
+@login_required
+def postComment(request):
+    if request.POST.get('action') == '':
+        user = request.user
+        comment = request.POST.get('comment')
+        post_id = request.POST.get('post_id')
+        post = Post(pk=post_id)
+        post_comment = Comment(user=user,post=post,content=comment)
+        # post_comment.save()
+        return HttpResponse(status=204)
     else:
         return redirect('home')

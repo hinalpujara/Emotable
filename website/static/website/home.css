@@ -32,6 +32,9 @@ body{
 
 img {
     border-radius: 50%;
+}
+
+.mainImg {
     height: 1.75rem;
     width: 1.75rem;
 }

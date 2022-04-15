@@ -4,8 +4,14 @@
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'website/home.css'%}" />
 <link rel="stylesheet" type="text/css" href="{% static 'website/post.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'website/postComments.css'%}" />
 {% endblock style %} 
 {% block body %}
+
+{% comment %} Comments Modal {% endcomment %}
+{% for commentPost in posts_list %}
+  {% include "website/commentsModal.html" with post=commentPost %}
+{% endfor %}
 
 {% comment %} Add post popup {% endcomment %}
 <div class="modal fade" id="postContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -35,13 +41,13 @@
 <div class="row">
     <div class="left col-3">
     <div class="text-center welcome p-2">
-    <img src="/media/logo.png"></img>
+    <img class="mainImg" src="/media/logo.png"></img>
         <span class="ml-3">Welcome {{ user.first_name |title}} </span>
     </div>
     <a type="button" class="btn btn-dark btn-primary-outline mt-5" data-toggle="modal" data-target="#postContent">Emote</a>
     <div class="row p-3 signOut d-flex justify-content-center">
         <a class="btn bg-transparent signoutButton" href="{% url 'logout'  %}">
-            <img src="{{user.profile.profile_picture.url}}" alt="Profile picture">
+            <img class="mainImg" src="{{user.profile.profile_picture.url}}" alt="Profile picture">
             <span class="pt-3 signOutText">SIGN OUT</span>
         </a>
     </div>
@@ -67,9 +73,8 @@
               {{post.content}}
             </div>
             <div class="text-right align-self-end mt-5">
-              {% comment %} <span><button class="fas fa-heart fa-lg btn bg-transparent" href="{% url 'post-like' post.id %}"></button></span> {% endcomment %}
               <span><button class="far fa-heart fa-lg btn bg-transparent p-1" id="post-{{post.id}}" onclick="like({{post.id}});"></button></span>
-              <span><button class="far fa-comment fa-lg btn bg-transparent p-1 mr-2"></button></span>
+              <span><button class="far fa-comment fa-lg btn bg-transparent p-1 mr-2" data-toggle="modal" data-target="#PostModal{{post.id}}"></button></span>
               <span class="emotion p-2 mr-1">{{post.emotion}}</span>
             <span><button class="fas fa-volume-up fa-lg btn bg-transparent" id="{{post.content}}"></button></span>
             </div>
@@ -118,10 +123,7 @@ $(document).ready(function() {
         data:{
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: ''
-        },
-        success:function(json){
-            console.log("done!!");
-        },
+        }
     });
     } else {
       $("#post-"+post_id.toString()).removeClass("fas").addClass("far");
@@ -131,11 +133,29 @@ $(document).ready(function() {
         data:{
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: ''
-        },
-        success:function(json){
-            console.log("done!!");
-        },
+        }
     });
+    }
+  }
+
+  function postComment(post_id){
+    var comment = $('#floatingInput'+post_id.toString()).val();
+    try{
+       $.ajax({
+        type: 'POST',
+        url: '{% url "postComment" %}',
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: '',
+            comment: comment,
+            post_id: post_id
+        }
+       });
+       jQuery.noConflict();
+       $("#PostModal"+post_id.toString()).modal('hide');
+       $("#PostModal"+post_id.toString()).modal('show');
+    } catch(e){
+      console.log("errorrrrrr",e.message)
     }
   }
 
