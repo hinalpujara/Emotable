@@ -9,10 +9,15 @@ GENDER_CHOICES = (
         ('O', 'Other')
     )
 
+def upload_location(instance, filename):
+    filebase, extension = filename.split('.')
+    return 'profile_pics/%s.%s' % (instance.user.username, extension)
+
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_picture = models.ImageField(default='default.png',upload_to='profile_pics')
+    profile_picture = models.ImageField(default='default.png',upload_to=upload_location)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     bio = models.CharField(max_length=1000)
     birth_date = models.DateField(null=True)

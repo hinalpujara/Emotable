@@ -1,3 +1,4 @@
+import email
 from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -19,6 +20,7 @@ from django.views import generic
 # Create your views here.
 emotions = ['neutral','worry','happiness','sadness','love','surprise','fun','relief','hate','empty','enthusiasm','boredom','anger']
 emotions.sort()
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -108,7 +110,7 @@ def edit_prof(request):
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid() and p_form.is_valid():
             form.save()
-            p_form.save()
+            p_form = p_form.save()
             messages.success(request, 'Profile details updated.')
             return redirect('edit-profile')
     else:
@@ -119,7 +121,7 @@ def edit_prof(request):
         'p_form' : p_form
     }
     
-    return render(request, 'website/edit_prof.html' ,context)
+    return render(request, 'website/editProfile.html' ,context)
 
 def panel(request):
     return render(request, 'website/sidepanel.html')

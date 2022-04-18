@@ -16,7 +16,7 @@
     </div>
     <ul class="nav-list">
         <li>
-            <a href="" class="home">
+            <a href="{% url 'home' %}" class="home">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 <span class="link-name">Home</span>
             </a>
@@ -28,14 +28,14 @@
             </a>
         </li>
         <li>
-            <a href="" class="edit">
+            <a href={% url 'edit-profile' %} class="edit">
                 <i class="fa fa-edit"></i>
                 <span class="link-name ">Edit Profile</span>
             </a>
         </li>
     </ul>
     <div class="logout" id="log-out">
-        <a href="">
+        <a href="{% url 'logout' %}">
             <i class="fa fa-sign-out" aria-hidden="true"></i>
             <span class="link-name">Log Out</span>
         </a>

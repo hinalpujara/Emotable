@@ -107,7 +107,7 @@ class ProfileUpdateForm(forms.ModelForm):
     bio =  forms.CharField(widget=forms.Textarea(
         attrs={'class': 'form-control round_border', 'placeholder': 'Bio',"rows":3, "cols":10}
     ))
-    profile_picture = forms.ImageField()
+    profile_picture = forms.ImageField(widget=forms.FileInput)
 
     class Meta:
         model = Profile

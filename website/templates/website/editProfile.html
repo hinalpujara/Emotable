@@ -7,12 +7,12 @@
 
 
 </style>
-<link rel="stylesheet" type="text/css" href="{% static 'website/edit.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'website/editProfile.css'%}" />
 {% endblock style %}
 {% block body %}
 {% for message in messages %}
 <div class="alert alert-{{message.tags}} alert-dismissible fade show ml-5" role="alert">
-    <strong>Alert</strong>{{message}}
+    <strong>Alert: </strong>{{message}}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -31,10 +31,10 @@
             {% csrf_token %}
             <div class="row justify-content-center mb-3 mt-4 ">
                 <div class="profpic">
-                    <img class="border" src="/media/profile_pics/pic.jpg" alt="" id="pic">
+                    <img class="border" src="{{p_form.instance.profile_picture.url}}" alt="" id="pic">
                     <div>
-                        <input type="file" id="file" name='{{ p_form.profile_picture }}'>
-                        <label class="text-center" for="file" id="uploadbtn"> Choose Photo</label>
+                        {{p_form.profile_picture}}
+                        <label class="text-center" for="id_profile_picture" id="uploadbtn"> Choose Photo</label>
                     </div>
                     <div>
                         <h6 style="color: white;" class="mt-2 text-center">Profile Picture</h6>
@@ -71,13 +71,17 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-outline-light round_border px-4">Save</button>
+                <button type="submit" class="btn btn-outline-light round_border px-4 mb-3">Save</button>
             </div>
 
+        </form>
     </div>
-    </form>
-    <script>
-        const imgDiv = document.querySelector('.profpic');
+</div>
+</div>
+
+{% endblock body %}
+{% block jquery %}
+const imgDiv = document.querySelector('.profpic');
         const img = document.querySelector('#pic');
         const file = document.querySelector('#file');
         const upload = document.querySelector('#uploadbtn');
@@ -103,8 +107,4 @@
             }
         });
 
-    </script>
-</div>
-</div>
-
-{% endblock body %}
+{% endblock jquery %}
