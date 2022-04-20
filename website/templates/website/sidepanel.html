@@ -1,14 +1,5 @@
-{% extends "website/base.html" %}
-{% load static %}
-{% load socialaccount %}
-{% block style %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'website/sidepanel.css'%}" />
-{% endblock style %}
-{% block body %}
-
 {% comment %} Side panel {% endcomment %}
-<div class="sidebar">
+<div class="sidebar text-center">
     <div class="logo">
         <a id="btn">
             <img src="/media/logo.png"  class="logo-img" id="btn"></img>
@@ -41,22 +32,3 @@
         </a>
     </div>
 </div>
-
-<div class="main-body">
-    {% block main-body %} 
-    
-    {% endblock main-body %}
-</div>
-<script>
-    const btn = document.querySelector("#btn");
-    const side = document.querySelector(".sidebar");
-    
-    btn.onclick = function(){
-        side.classList.toggle("active");
-    }
-    
-</script>
-
-
-
-{% endblock body %}

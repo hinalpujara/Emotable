@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" type="text/css" href="{% static 'website/base.css'%}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'website/sidepanel.css'%}" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://kit.fontawesome.com/94ff7b6360.js" crossorigin="anonymous"></script>
     {% block style %}
@@ -28,6 +29,12 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+    const btn = document.querySelector("#btn");
+    const side = document.querySelector(".sidebar");
+    
+    btn.onclick = function(){
+        side.classList.toggle("active");
+    }
     {% block jquery %}
 
     {% endblock jquery %}

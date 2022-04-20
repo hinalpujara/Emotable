@@ -123,9 +123,6 @@ def edit_prof(request):
     
     return render(request, 'website/editProfile.html' ,context)
 
-def panel(request):
-    return render(request, 'website/sidepanel.html')
-
 @login_required
 def likePost(request,pk):
     if request.POST.get('action') == '':
