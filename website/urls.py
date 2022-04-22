@@ -17,4 +17,5 @@ urlpatterns = [
     path('unlikePost/<int:pk>',views.unlikePost,name='unlikePost'),
     path('likePost/<int:pk>',views.likePost,name='likePost'),
     path('postComment/',views.postComment,name='postComment'),
+    path('profile/<str:username>',views.userProfile,name='userProfile'),
 ]

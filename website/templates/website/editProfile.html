@@ -30,7 +30,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row justify-content-center mb-3 mt-4 ">
-                <div class="profpic">
+                <div class="profpic text-center">
                     <img class="border" src="{{p_form.instance.profile_picture.url}}" alt="" id="pic">
                     <div>
                         {{p_form.profile_picture}}

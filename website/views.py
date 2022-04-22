@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token  
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
-from .models import Like, Post,Comment, Profile
+from .models import Like, Post,Comment, Profile, User
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.views import generic
@@ -155,3 +155,8 @@ def postComment(request):
         return HttpResponse(status=204)
     else:
         return redirect('home')
+
+@login_required
+def userProfile(request,username):
+    user = User.objects.get(username=username)
+    return render(request, 'website/userProfile.html', {"user":user})

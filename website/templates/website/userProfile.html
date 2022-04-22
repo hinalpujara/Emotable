@@ -1,0 +1,13 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}{{user.username}}{% endblock title %}
+{% block style %}
+
+{% endblock style %} 
+{% block body %}
+
+{{user.first_name}}
+{{user.last_name}}
+{{user.profile.gender}}
+{{user.profile.birth_date}}
+{% endblock body %}

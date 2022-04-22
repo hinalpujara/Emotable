@@ -50,7 +50,7 @@
           <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
           </div>
           <div>
-              <span class="username">@{{post.user.username}}</span>
+              <span class="username"><a href="{% url "userProfile" username=post.user.username %}">@{{post.user.username}}</a></span>
             </div>
             <div>
               {{post.user.first_name}} <span> {{post.user.last_name}}</span>
@@ -71,7 +71,8 @@
         {% endfor %}
       </div>
       <div class="col-3 d-flex flex-column align-items-center">
-        <input type="text" class="search mt-3 py-1 px-3" id="search">
+      <i class="fas fa-search"></i>
+        <input type="text" class="search mt-3 py-1 px-3" id="search" placeholder="Search">
       </div>
     </div>
     </div>
