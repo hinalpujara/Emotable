@@ -49,8 +49,8 @@
           <div>
           <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
           </div>
-          <div>
-              <span class="username"><a href="{% url "userProfile" username=post.user.username %}">@{{post.user.username}}</a></span>
+          <div class="username">
+              <a href="{% url "userProfile" username=post.user.username %}">@{{post.user.username}}</a>
             </div>
             <div>
               {{post.user.first_name}} <span> {{post.user.last_name}}</span>
@@ -129,7 +129,7 @@ $(document).ready(function() {
 
   function postComment(post_id){
     var comment = $('#floatingInput'+post_id.toString()).val();
-    {% comment %} try{ {% endcomment %}
+    try{
        $.ajax({
         type: 'POST',
         url: '{% url "postComment" %}',
@@ -157,7 +157,7 @@ $(document).ready(function() {
             
             var html = [    $('<div/>',{ "class": "row modalComments mt-2 mb-3"}).append([
                             $('<div/>',{ "class": "col-2 text-center" }).append([$('<img/>',{"height":40,"width":40,"src":"/media/"+data.picture})]),
-                            $('<div/>',{ "class": "username"}).text("@"+data.username).append([$('<div/>').text(data.message)])
+                            $('<div/>',{ "class": "username"}).append([$('<a/>',{ "href": "{% url "userProfile" username=12 %}".replace(/12/, data.username)}).text("@"+data.username),$('<div/>').text(data.message)])
                             ])
                         ]
             $( ".modal-body"+post_id.toString()).append(html);
@@ -183,9 +183,9 @@ $(document).ready(function() {
             const message = comment;
             handleSend(message);
 
-    {% comment %} } catch(e){
+    } catch(e){
       console.log("errorrrrrr",e.message)
-    } {% endcomment %}
+    }
   }
 
   $( document ).ready(function(){

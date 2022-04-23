@@ -151,7 +151,7 @@ def postComment(request):
         post_id = request.POST.get('post_id')
         post = Post(pk=post_id)
         post_comment = Comment(user=user,post=post,content=comment)
-        # post_comment.save()
+        post_comment.save()
         return HttpResponse(status=204)
     else:
         return redirect('home')

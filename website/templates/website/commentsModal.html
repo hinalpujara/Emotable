@@ -33,7 +33,9 @@
             <img src="/media/{{comment.user.profile.profile_picture}}" height="40" width="40"></img>
             </div>
             <div>
-            <div class="username">@{{comment.user.username}}</div>
+             <div class="username">
+             <a href="{% url "userProfile" username=post.user.username %}">@{{post.user.username}}</a>
+            </div>
             {{comment.content}}</div>
         </div>
         {% empty %}
@@ -41,12 +43,10 @@
         <div class="text-center">Start a conversation</div>
       {% endfor %}
       </div>
-      {% comment %} <form onsubmit="postComment({{commentPost.id}})"> {% endcomment %}
         <div class="form-group modal-footer">
             <input class="comment form-control ml-2 mr-1" type="text" id="floatingInput{{commentPost.id}}" placeholder="Enter comment..." value="" required></input>
             <button type="submit" class="btn btn-primary pl-1 pr-1" onclick="postComment({{commentPost.id}})"><i class="fas fa-check"></i></button>
         </div>
-      {% comment %} </form>a {% endcomment %}
     </div>
   </div>
 </div>
