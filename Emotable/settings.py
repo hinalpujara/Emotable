@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from re import template
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'channels',
 ]
 
 
@@ -89,7 +89,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Emotable.wsgi.application'
+# WSGI_APPLICATION = 'Emotable.wsgi.application'
+# Channels
+ASGI_APPLICATION = "Emotable.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 
 # Database

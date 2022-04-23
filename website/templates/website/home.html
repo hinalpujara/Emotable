@@ -129,7 +129,7 @@ $(document).ready(function() {
 
   function postComment(post_id){
     var comment = $('#floatingInput'+post_id.toString()).val();
-    try{
+    {% comment %} try{ {% endcomment %}
        $.ajax({
         type: 'POST',
         url: '{% url "postComment" %}',
@@ -138,14 +138,54 @@ $(document).ready(function() {
             action: '',
             comment: comment,
             post_id: post_id
+        },
+        success: function(){
+
         }
        });
-       jQuery.noConflict();
-       $("#PostModal"+post_id.toString()).modal('hide');
-       $("#PostModal"+post_id.toString()).modal('show');
-    } catch(e){
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/'
+            + post_id.toString()
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            
+            var html = [    $('<div/>',{ "class": "row modalComments mt-2 mb-3"}).append([
+                            $('<div/>',{ "class": "col-2 text-center" }).append([$('<img/>',{"height":40,"width":40,"src":"/media/"+data.picture})]),
+                            $('<div/>',{ "class": "username"}).text("@"+data.username).append([$('<div/>').text(data.message)])
+                            ])
+                        ]
+            $( ".modal-body"+post_id.toString()).append(html);
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        const handleSend = () => {
+            if (chatSocket.readyState === WebSocket.OPEN){
+                chatSocket.send(JSON.stringify({
+                    'message': comment,
+                    'picture':'{{request.user.profile.profile_picture}}',
+                    'username':'{{request.user.username}}'
+                }));
+                $('#floatingInput'+post_id.toString()).val('');
+            } else {
+                // Queue a retry
+                setTimeout(() => { handleSend() }, 1000)
+            }
+            };
+            const message = comment;
+            handleSend(message);
+
+    {% comment %} } catch(e){
       console.log("errorrrrrr",e.message)
-    }
+    } {% endcomment %}
   }
 
   $( document ).ready(function(){
@@ -153,5 +193,7 @@ $(document).ready(function() {
     const side = document.querySelector(".sidebar");
     side.classList.toggle("active");
   })
+
+  
 
 {% endblock jquery %}

@@ -26,9 +26,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body{{commentPost.id}}">
       {% for comment in commentPost.comment_set.all %}
-        <div class="row modalComments mt-4">
+        <div class="row modalComments mt-2 mb-3">
             <div class="col-2 text-center">
             <img src="/media/{{comment.user.profile.profile_picture}}" height="40" width="40"></img>
             </div>
@@ -41,12 +41,12 @@
         <div class="text-center">Start a conversation</div>
       {% endfor %}
       </div>
-      <form onsubmit="postComment({{commentPost.id}})">
+      {% comment %} <form onsubmit="postComment({{commentPost.id}})"> {% endcomment %}
         <div class="form-group modal-footer">
             <input class="comment form-control ml-2 mr-1" type="text" id="floatingInput{{commentPost.id}}" placeholder="Enter comment..." value="" required></input>
-            <button type="submit" class="btn btn-primary pl-1 pr-1"><i class="fas fa-check"></i></button>
+            <button type="submit" class="btn btn-primary pl-1 pr-1" onclick="postComment({{commentPost.id}})"><i class="fas fa-check"></i></button>
         </div>
-      </form>
+      {% comment %} </form>a {% endcomment %}
     </div>
   </div>
 </div>
