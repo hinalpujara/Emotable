@@ -161,6 +161,7 @@ $(document).ready(function() {
                             ])
                         ]
             $( ".modal-body"+post_id.toString()).append(html);
+            $(".noComments").remove()
         };
 
         chatSocket.onclose = function(e) {
