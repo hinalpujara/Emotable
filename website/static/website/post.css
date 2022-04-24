@@ -38,8 +38,23 @@
 }
 
 .emotion {
-    background-color: rgb(23, 204, 23);
     border-radius: 10px;
+}
+
+.Happy {
+    background-color: rgb(23, 204, 23);
+}
+
+.Angry {
+    background-color: rgb(199, 10, 10);
+}
+
+.Sadness {
+    background-color: yellow;
+}
+
+.Worry{
+    background-color: rgb(110, 196, 232);
 }
 
 .username a{

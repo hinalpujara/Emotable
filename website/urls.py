@@ -16,6 +16,5 @@ urlpatterns = [
     path('likePost/<int:pk>',views.likePost,name='likePost'),
     path('postComment/',views.postComment,name='postComment'),
     path('profile/<str:username>',views.userProfile,name='userProfile'),
-    # path('', views.index, name='index'),
-    # path('<str:post_id>/', views.room, name='room'),
+    path('search/',views.search_results,name="search")
 ]

@@ -1,4 +1,5 @@
 import email
+import json
 from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -18,7 +19,7 @@ from django.contrib import messages
 from django.views import generic
 
 # Create your views here.
-emotions = ['neutral','worry','happiness','sadness','love','surprise','fun','relief','hate','empty','enthusiasm','boredom','anger']
+emotions = ["neutral","worry","happiness","sadness","love","surprise","fun","relief","hate","empty","enthusiasm","boredom","anger"]
 emotions.sort()
 
 
@@ -59,6 +60,7 @@ def register(request):
 
 @login_required
 def home(request):
+    posts_list = Post.objects.all().order_by('-time_posted')
     if request.method == 'POST':
         post_form = PostContent(request.POST)
         post = post_form.save(commit=False)
@@ -67,11 +69,10 @@ def home(request):
         post.emotion = "Happy"
         post.user = request.user
         post.save()
-        return render(request,'website/home.html', {'post_form': post_form,'emotions':emotions})
-    else:
-        posts_list = Post.objects.all().order_by('-time_posted')
-        post_form = PostContent()
-        return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
+        return render(request,'website/home.html', {'post_form': post_form,'posts_list':posts_list,'emotions':emotions})
+
+    post_form = PostContent()
+    return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
 
 
 def activate(request, uidb64, token):  
@@ -160,3 +161,10 @@ def postComment(request):
 def userProfile(request,username):
     user = User.objects.get(username=username)
     return render(request, 'website/userProfile.html', {"user":user})
+
+@login_required
+def search_results(request):
+    if request.GET.get('action') == 'search_by_tag':
+        emotion = request.GET.get('emotion')
+        post_list = Post.objects.filter(emotion=emotion).order_by('-time_posted')
+        return HttpResponse(post_list)

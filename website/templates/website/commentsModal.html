@@ -4,20 +4,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="row">
-          <div class="col-2 text-center">
+          <div class="col-3 text-center">
           <img class="profile_image" src="/media/{{commentPost.user.profile.profile_picture}}"></img>
           <div class="username">
-             <a href="{% url "userProfile" username=commentPost.user.username %}">@{{commentPostComme.user.username}}</a>
+             <a href="{% url "userProfile" username=commentPost.user.username %}">@{{commentPost.user.username}}</a>
             </div>
             <div>{{commentPost.user.first_name}} <span>{{commentPost.user.last_name}}</span>
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-9">
             <div>
                 {{commentPost.content}}
             </div>
             <div class="text-right align-self-end mt-4">
-            <span class="emotion p-2 mr-1">{{commentPost.emotion}}</span>
+            {% comment %} <span><button class="far fa-heart fa-lg btn bg-transparent p-1" id="post-{{commentPost.id}}" onclick="like({{commentPost.id}});"></button></span> {% endcomment %}
+            <span class="emotion p-2 mr-1 {{commentPost.emotion}}">{{commentPost.emotion}}</span>
             <span><button class="fas fa-volume-up fa-lg btn bg-transparent modalVolume" id="{{commentPost.content}}"></button></span>
             </div>
           </div>

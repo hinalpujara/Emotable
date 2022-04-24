@@ -4,3 +4,8 @@
     --hover: #252525;
     --gray: #524E4E;
 }
+
+html,body{
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
