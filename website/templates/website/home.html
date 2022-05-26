@@ -44,7 +44,7 @@
     <div class="row">
       <div class="col-9 posts">
         {% for post in posts_list %}
-          <div class="postContainer row my-2 mt-3">
+          <div class="postContainer row my-2 mt-3 remove{{post.emotion}}">
           <div class="col-3 text-center">
           <div>
           <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
@@ -63,7 +63,7 @@
             <div class="text-right align-self-end mt-5">
               <span><button class="far fa-heart fa-lg btn bg-transparent p-1" id="post-{{post.id}}" onclick="like({{post.id}});"></button></span>
               <span><button class="far fa-comment fa-lg btn bg-transparent p-1 mr-2" data-toggle="modal" data-target="#PostModal{{post.id}}"></button></span>
-              <span class="emotion p-2 mr-1 {{post.emotion}}">{{post.emotion}}</span>
+              <span class="emotion py-2 px-4 mr-1 {{post.emotion}}">{{post.emotion}}</span>
             <span><button class="fas fa-volume-up fa-lg btn bg-transparent" id="{{post.content}}"></button></span>
             </div>
           </div>
@@ -93,6 +93,16 @@ jQuery(document).on('click', ".fa-volume-up", function(){
   window.speechSynthesis.speak(speech);
 });
 
+$(function(){
+  $("#search").on("input", function(){
+      if($('#search').val().length===0){
+        {% for emo in emotions %}
+          $( ".remove"+"{{emo|title}}" ).show();
+        {% endfor %}
+      }
+    });
+});
+
 $(document).ready(function() {
   $(function(){
     var emotions = [];
@@ -111,7 +121,13 @@ $(document).ready(function() {
                 emotion: ui.item.value
             },
             success: function(data){
-              console.log(data)
+              {% for emotion in emotions %}
+              if("{{emotion|title}}"!==ui.item.value){
+                	$( ".remove"+"{{emotion|title}}" ).hide();
+              } else {
+                $( ".remove"+"{{emotion|title}}" ).show();
+              }
+              {% endfor %}
             }
         });
       }

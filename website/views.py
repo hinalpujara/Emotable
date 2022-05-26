@@ -17,9 +17,15 @@ from .models import Like, Post,Comment, Profile, User
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.views import generic
+from profanity_filter import ProfanityFilter
+import spacy
+nlp = spacy.load('en_core_web_sm')
+from django.core import serializers
+
+pf = ProfanityFilter(nlps={'en_core_web_sm': nlp})
 
 # Create your views here.
-emotions = ["neutral","worry","happiness","sadness","love","surprise","fun","relief","hate","empty","enthusiasm","boredom","anger"]
+emotions = ["surprise","joy","sadness","love","fear","anger"]
 emotions.sort()
 
 
@@ -66,6 +72,7 @@ def home(request):
         post = post_form.save(commit=False)
         # loaded_model = pickle.load(open("model/emotion.pkl", 'rb'))
         # post.emotion = loaded_model.predict(post.content)
+        post.content = pf.censor(post.content)
         post.emotion = "Happy"
         post.user = request.user
         post.save()
@@ -167,4 +174,7 @@ def search_results(request):
     if request.GET.get('action') == 'search_by_tag':
         emotion = request.GET.get('emotion')
         post_list = Post.objects.filter(emotion=emotion).order_by('-time_posted')
-        return HttpResponse(post_list)
+        serialized_qs = serializers.serialize('json', post_list)
+        data = {"queryset" : serialized_qs}
+        return JsonResponse(data)
+        # return HttpResponse(post_list)

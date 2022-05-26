@@ -41,11 +41,11 @@
     border-radius: 10px;
 }
 
-.Happy {
+.Joy {
     background-color: rgb(23, 204, 23);
 }
 
-.Angry {
+.Anger {
     background-color: rgb(199, 10, 10);
 }
 
@@ -53,8 +53,16 @@
     background-color: yellow;
 }
 
-.Worry{
+.Fear{
     background-color: rgb(110, 196, 232);
+}
+
+.Love{
+    background-color: rgb(245, 97, 211);
+}
+
+.Surprise{
+    background-color: rgb(87, 63, 247);
 }
 
 .username a{
