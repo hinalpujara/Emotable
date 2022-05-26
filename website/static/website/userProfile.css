@@ -1,0 +1,68 @@
+body{
+    background-color: var(--base);
+}
+
+.grey-panel{
+    margin-left: 5%;
+    background-color: #2E2D2C;
+    width: 23%;
+    height: 100%;
+    position: fixed;
+}
+
+.grey-panel .picture{
+    border-radius: 50%;
+    margin-top: 7%;
+    height: 50%;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.next-plane{
+    min-height: 20%;
+    margin-left: 28%;
+}
+
+.next-plane .username1{
+    margin-left: 4.5%;
+    color: #2E2D2C;
+}
+
+.next-plane .postques{
+    margin-left: 3%;
+    font-size: 20px;
+}
+
+.next-plane .picture1{
+    border-radius: 50%;
+    margin-top: 3%;
+    height: 7%;
+    width: 7%;
+    margin-left: 4%;
+}
+
+.button1{
+    background-color: black;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    padding-right: 2%;
+    padding-left: 2%;
+    margin-left: 5%;
+}
+
+
+input[type=text] {
+    width: 60%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #B1A7A7;
+    margin-left: 2%;
+    background-color: var(--base) ;
+  }
+input[type =text]:focus {
+    border: none;
+    outline:none;
+}
+
+

@@ -68,7 +68,8 @@ class ProfileRegisterForm(forms.ModelForm):
         fields = ["birth_date","gender"]
 
 class PostContent(forms.ModelForm):
-    content = forms.CharField()
+    content = forms.CharField(required=True,widget=forms.TextInput(
+        attrs={'class': 'postans'}))
 
     class Meta:
         model = Post

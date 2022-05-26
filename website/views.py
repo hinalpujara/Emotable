@@ -112,26 +112,6 @@ def googleRegister(request):
     return HttpResponse('Hola')  
 
 @login_required
-def edit_prof(request):
-    if request.method == "POST":
-        form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if form.is_valid() and p_form.is_valid():
-            form.save()
-            p_form = p_form.save()
-            messages.success(request, 'Profile details updated.')
-            return redirect('edit-profile')
-    else:
-        form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-    context = {
-        'form' : form,
-        'p_form' : p_form
-    }
-    
-    return render(request, 'website/editProfile.html' ,context)
-
-@login_required
 def likePost(request,pk):
     if request.POST.get('action') == '':
         post = Post(pk=pk)
@@ -165,9 +145,53 @@ def postComment(request):
         return redirect('home')
 
 @login_required
+def edit_prof(request):
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid() and p_form.is_valid():
+            form.save()
+            p_form = p_form.save()
+            messages.success(request, 'Profile details updated.')
+            return redirect('edit-profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {
+        'form' : form,
+        'p_form' : p_form
+    }
+    
+    return render(request, 'website/editProfile.html' ,context)
+
+@login_required
 def userProfile(request,username):
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid() and p_form.is_valid():
+            form.save()
+            p_form = p_form.save()
+            messages.success(request, 'Profile details updated.')
+            return redirect('edit-profile')
+        post_form = PostContent(request.POST)
+        post = post_form.save(commit=False)
+        post.emotion = "Happy"
+        post.user = request.user
+        post.save()
+    else:
+        form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
     user = User.objects.get(username=username)
-    return render(request, 'website/userProfile.html', {"user":user})
+    post_form = PostContent()
+    context = {
+        'form' : form,
+        'p_form' : p_form,
+        'user':user,
+        'post_form': post_form,
+        'emotions':emotions
+    }
+    return render(request, 'website/userProfile.html', context)
 
 @login_required
 def search_results(request):

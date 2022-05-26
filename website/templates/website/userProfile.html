@@ -3,11 +3,75 @@
 {% block title %}{{user.username}}{% endblock title %}
 {% block style %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'website/post.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'website/postComments.css'%}" /> 
+<link rel="stylesheet" type="text/css" href="{% static 'website/userProfile.css'%}">
 {% endblock style %} 
 {% block body %}
 
-{{user.first_name}}
+ <!-- {{user.first_name}}
 {{user.last_name}}
 {{user.profile.gender}}
-{{user.profile.birth_date}}
+{{user.profile.birth_date}}  -->
+    {% include 'website/sidepanel.html' %}
+
+
+    
+    <div class="grey-panel">
+        <div>
+            <img class="picture" src="{{p_form.instance.profile_picture.url}}" alt="">
+        </div>
+
+    </div>
+    <div class="next-plane">
+        <div>
+            <form action="">
+                {% csrf_token %}
+                <div>
+                    <img class="picture1" src="{{p_form.instance.profile_picture.url}}" alt="">
+                    <span class="postques">What's on your Mind?</span>
+                    <div class="username1">
+                        <a href="" style="color: #2E2D2C;">@{{user.username}}</a>
+                        {{post_form.content}}
+                        <button type="submit" class="button1">Post</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        
+        {% for post in posts_list %}
+        <div class="postContainer row my-2 mt-3">
+          <div class="col-3 text-center">
+            <div>
+              <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
+            </div>
+            <div class="username">
+              <a href="{% url " userProfile" username=post.user.username %}">@{{post.user.username}}</a>
+            </div>
+            <div>
+              {{post.user.first_name}} <span> {{post.user.last_name}}</span>
+            </div>
+          </div>
+          <div class="col-9">
+            <div>
+              {{post.content}}
+            </div>
+            <div class="text-right align-self-end mt-5">
+              <span><button class="far fa-heart fa-lg btn bg-transparent p-1" id="post-{{post.id}}"
+                  onclick="like({{post.id}});"></button></span>
+              <span><button class="far fa-comment fa-lg btn bg-transparent p-1 mr-2" data-toggle="modal"
+                  data-target="#PostModal{{post.id}}"></button></span>
+              <span class="emotion p-2 mr-1 {{post.emotion}}">{{post.emotion}}</span>
+              <span><button class="fas fa-volume-up fa-lg btn bg-transparent" id="{{post.content}}"></button></span>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h3>No posts found!</h3>
+        {% endfor %}
+    </div>
+    
+    
+
 {% endblock body %}
