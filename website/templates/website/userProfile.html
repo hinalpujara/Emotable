@@ -47,7 +47,7 @@
               <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
             </div>
             <div class="username">
-              <a href="{% url " userProfile" username=post.user.username %}">@{{post.user.username}}</a>
+              <a href="{% url "userProfile" username=post.user.username %}">@{{post.user.username}}</a>
             </div>
             <div>
               {{post.user.first_name}} <span> {{post.user.last_name}}</span>

@@ -166,6 +166,11 @@ def edit_prof(request):
 
 @login_required
 def userProfile(request,username):
+    user = User.objects.get(username=username)
+    posts_list = Post.objects.filter(user=user)
+    userEmotions = set()
+    for posts in posts_list:
+        userEmotions.add(posts.emotion)
     if request.method == "POST":
         form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -189,7 +194,9 @@ def userProfile(request,username):
         'p_form' : p_form,
         'user':user,
         'post_form': post_form,
-        'emotions':emotions
+        'emotions':emotions,
+        'posts_list':posts_list,
+        'userEmotions': userEmotions
     }
     return render(request, 'website/userProfile.html', context)
 
