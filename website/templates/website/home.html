@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'website/home.css'%}" />
 <link rel="stylesheet" type="text/css" href="{% static 'website/post.css'%}" />
 <link rel="stylesheet" type="text/css" href="{% static 'website/postComments.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'website/userProfile.css'%}">
+
 {% endblock style %} 
 {% block body %}
 
@@ -13,29 +15,6 @@
   {% include "website/commentsModal.html" with post=commentPost %}
 {% endfor %}
 
-{% comment %} Add post popup {% endcomment %}
-<div class="modal fade" id="postContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add a post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <form method="post">
-        {% csrf_token %}
-            <div class="modal-body">
-                {{post_form}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Post</button>
-            </div>
-       </form>
-    </div>
-  </div>
-</div>
 
 <div class="row justify-content-end">
  {% include 'website/sidepanel.html' %}
@@ -43,6 +22,17 @@
     <div class="right col-md-10 col-12 mt-4">
     <div class="row">
       <div class="col-9 posts">
+       <form method="post">
+                {% csrf_token %}
+                <div>
+                  <img class="picture1" src="/media/{{otherUser.profile.profile_picture}}" alt="">
+                </div>
+                    <div class="username1 ml-5">
+                        {{post_form.content}}
+                       <button type="submit" class="button1 postEmotion">Post</button>
+                    
+                </div>
+            </form>
         {% for post in posts_list %}
           <div class="postContainer row my-2 mt-3 remove{{post.emotion}}">
           <div class="col-3 text-center">

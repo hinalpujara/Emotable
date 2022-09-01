@@ -1,7 +1,7 @@
 {% comment %} Side panel {% endcomment %}
 <div class="sidebar text-center">
     <div class="logo">
-        <a id="btn">
+        <a id="btn" class="bird">
             <img src="/media/logo.png" class="logo-img" id="btn"></img>
         </a>
     </div>
@@ -15,7 +15,7 @@
             </div>
         </li>
         <li>
-            <a href="" class="prof">
+            <a href="{% url "userProfile" username=user.username %}" class="prof">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span class="link-name ">Profile</span>
             </a>

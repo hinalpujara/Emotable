@@ -111,7 +111,9 @@
 {% endblock body %}
 
 {% block jquery %}
-{% if modal %}
-    $('#exampleModalCenter').modal('show');
-{% endif %}
+
+    {% if modal %}
+        $('#exampleModalCenter').modal('show');
+    {% endif %}
+
 {% endblock jquery %}

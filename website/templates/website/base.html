@@ -20,7 +20,6 @@
     {% endblock style %}
 </head>
 <body>
-    
     {% block body %} 
     
     {% endblock body %}
@@ -32,12 +31,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
 
     <script>
-    const btn = document.querySelector("#btn");
+    {% if user.is_authenticated %}
+    const btn = document.querySelector(".bird");
     const side = document.querySelector(".sidebar");
     
     btn.onclick = function(){
         side.classList.toggle("active");
     }
+    {% endif %}
     {% block jquery %}
 
     {% endblock jquery %}

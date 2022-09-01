@@ -69,7 +69,7 @@ class ProfileRegisterForm(forms.ModelForm):
 
 class PostContent(forms.ModelForm):
     content = forms.CharField(required=True,widget=forms.TextInput(
-        attrs={'class': 'postans'}))
+        attrs={'class': 'postans p-3','placeholder': 'What\'s on your mind?','rows':3}))
 
     class Meta:
         model = Post

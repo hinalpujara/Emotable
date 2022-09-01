@@ -39,6 +39,9 @@
 
 .emotion {
     border-radius: 10px;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
 }
 
 .Joy {

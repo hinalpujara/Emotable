@@ -49,23 +49,35 @@
     transition: all 0.5s ease;
 }
 
-/* .sidebar.active .home:hover{
-
-} */
-
-/* .sidebar.active .home{
-    padding-left: 2rem;
-    padding-right: 5.2rem;
-    transition: all 0.5s ease;
-} */
-.sidebar.active .edit{
+/* .sidebar.active .home:hove{
     padding-left: 2rem;
     padding-right: 2.5rem; 
     transition: all 0.5s ease;
+} */
+
+.sidebar.active .home{
+    padding-left: -0.7rem;
+    transition: all 0.5s ease;
 }
-.sidebar.active .prof{
-    padding-left: 2rem;
-    padding-right: 5rem;
+.sidebar.active .edit{
+    margin-left: 0.9rem;
+    transition: all 0.5s ease;
+}
+.sidebar .prof{
+    margin-left: -0.7remm;
+    transition: all 0.5s ease;
+}
+
+.sidebar .home{
+    margin-left: -2rem;
+    transition: all 0.5s ease;
+}
+.sidebar .edit{
+    margin-left: -2rem;
+    transition: all 0.5s ease;
+}
+.sidebar .prof{
+    margin-left: -2rem;
     transition: all 0.5s ease;
 }
 
@@ -75,7 +87,7 @@
 .sidebar ul{
 
     list-style-type: none;
-    margin-left: -1.7rem;
+    
     margin-top:1rem;
     transition: all 0.5s ease;
 }
@@ -171,6 +183,7 @@
 }
 
 .sidebar.active .logout{
+    margin-left: 2.25rem;
     position: absolute;
     bottom: 1rem;
     transition: all 0.5s ease;
@@ -181,8 +194,8 @@
     text-decoration: none;
     text-align: center;
     transition: all 0.4s ease;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
     font-size: 20px;
     bottom: 0;
     position: relative;
@@ -194,24 +207,24 @@
     text-align: center;
     transition: all 0.4s ease;
     padding-left: 2rem;
-    padding-right: 4.5rem;
+    padding-right: 2rem;
     font-size: 20px;
     bottom: 0;
     position: relative;
     margin-left: 0.85rem;
     transition: all 0.5s ease;
 }
-
+/* 
 .sidebar .logout a:hover{
     color:black;
     background-color: white;
     text-decoration: none;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
-    width: 100% ;
+    width: 80% ;
     border-radius: 25px;
     transition: all 0.5s ease;
-}
+} */
 
 
 .main-body{

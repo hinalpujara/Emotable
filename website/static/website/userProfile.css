@@ -46,13 +46,14 @@ body{
     border-radius: 40px;
     border: none;
     color: white;
-    padding-right: 2%;
-    padding-left: 2%;
     margin-left: 5%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    min-width: 10rem;
 }
 
 
-input[type=text] {
+.postans {
     width: 60%;
     box-sizing: border-box;
     border: none;
@@ -60,9 +61,11 @@ input[type=text] {
     margin-left: 2%;
     background-color: var(--base) ;
   }
-input[type =text]:focus {
+.postans:focus {
     border: none;
     outline:none;
 }
 
-
+.profPost{
+    max-width: 90%!important;
+}

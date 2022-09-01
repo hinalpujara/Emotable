@@ -17,17 +17,31 @@ from .models import Like, Post,Comment, Profile, User
 from .forms import UserLoginForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.views import generic
-from profanity_filter import ProfanityFilter
-import spacy
-nlp = spacy.load('en_core_web_sm')
-from django.core import serializers
+from better_profanity import profanity
 
-pf = ProfanityFilter(nlps={'en_core_web_sm': nlp})
+from django.core import serializers
+from tensorflow import keras
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import numpy as np
+
 
 # Create your views here.
 emotions = ["surprise","joy","sadness","love","fear","anger"]
 emotions.sort()
+classes_to_index = {'Anger': 5, 'Fear': 2, 'Joy': 3, 'Love': 4, 'Sadness': 1, 'Surprise': 0}
+index_to_classes = {0: 'Surprise', 1: 'Sadness', 2: 'Fear', 3: 'Joy', 4: 'Love', 5: 'Anger'}
+import pickle
+with open('D:\Priyal\Sem-VI\MP\Emotable\model\\tokenizer.pickle', 'rb') as handle:
+    print(handle)
+    tokenizer = pickle.load(handle)
+    # tokenizer = joblib.load(handle)
 
+def get_sequences(tokenizer, tweets):
+    sequences = tokenizer.texts_to_sequences(tweets)
+    padded_sequences = pad_sequences(sequences, truncating='post', maxlen=50, padding='post')
+    return padded_sequences
+model1 = keras.models.load_model("D://Priyal/Sem-VI/MP/Emotable/model/my_model")
 
 def register(request):
     if request.user.is_authenticated:
@@ -56,6 +70,8 @@ def register(request):
                             mail_subject, message, to=[to_email]  
                 )  
                 email.send()  
+                form = UserRegisterForm()
+                p_form = ProfileRegisterForm()
                 return render(request,'website/register.html',{'form': form, 'p_form': p_form, 'modal': True}) 
             else:
                 return render(request,'website/register.html',{'form': form, 'p_form': p_form})
@@ -66,18 +82,25 @@ def register(request):
 
 @login_required
 def home(request):
-    posts_list = Post.objects.all().order_by('-time_posted')
+
     if request.method == 'POST':
         post_form = PostContent(request.POST)
         post = post_form.save(commit=False)
+        tweet_list = []
+        tweet_list.append(post.content)
+        test_sequences = get_sequences(tokenizer, tweet_list)
+        p = model1.predict(np.expand_dims(test_sequences[0], axis=0))[0]
+        classes_x = np.argmax(p,axis=0)
+        post.emotion = index_to_classes.get(classes_x)
+
         # loaded_model = pickle.load(open("model/emotion.pkl", 'rb'))
         # post.emotion = loaded_model.predict(post.content)
-        post.content = pf.censor(post.content)
-        post.emotion = "Happy"
+        post.content = profanity.censor(post.content)
+        # post.emotion = "Happy"
         post.user = request.user
         post.save()
-        return render(request,'website/home.html', {'post_form': post_form,'posts_list':posts_list,'emotions':emotions})
 
+    posts_list = Post.objects.all().order_by('-time_posted')
     post_form = PostContent()
     return render(request,'website/home.html', {'post_form': post_form, 'posts_list':posts_list,'emotions':emotions})
 
@@ -167,32 +190,28 @@ def edit_prof(request):
 @login_required
 def userProfile(request,username):
     user = User.objects.get(username=username)
-    posts_list = Post.objects.filter(user=user)
+
+    if request.method == "POST":
+        post_form = PostContent(request.POST)
+        if post_form.is_valid():
+            post_form = PostContent(request.POST)
+            post = post_form.save(commit=False)
+            tweet_list = []
+            tweet_list.append(post.content)
+            test_sequences = get_sequences(tokenizer, tweet_list)
+            p = model1.predict(np.expand_dims(test_sequences[0], axis=0))[0]
+            classes_x = np.argmax(p,axis=0)
+            post.emotion = index_to_classes.get(classes_x)
+            post.user = request.user
+            post.save()
+
+    posts_list = Post.objects.filter(user=user).order_by('-time_posted')
     userEmotions = set()
     for posts in posts_list:
         userEmotions.add(posts.emotion)
-    if request.method == "POST":
-        form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if form.is_valid() and p_form.is_valid():
-            form.save()
-            p_form = p_form.save()
-            messages.success(request, 'Profile details updated.')
-            return redirect('edit-profile')
-        post_form = PostContent(request.POST)
-        post = post_form.save(commit=False)
-        post.emotion = "Happy"
-        post.user = request.user
-        post.save()
-    else:
-        form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-    user = User.objects.get(username=username)
     post_form = PostContent()
     context = {
-        'form' : form,
-        'p_form' : p_form,
-        'user':user,
+        'otherUser':user,
         'post_form': post_form,
         'emotions':emotions,
         'posts_list':posts_list,

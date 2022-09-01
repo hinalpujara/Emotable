@@ -1,6 +1,6 @@
 {% extends "website/base.html" %}
 {% load static %}
-{% block title %}{{user.username}}{% endblock title %}
+{% block title %}{{otherUser.username}}{% endblock title %}
 {% block style %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'website/post.css'%}" />
@@ -8,40 +8,54 @@
 <link rel="stylesheet" type="text/css" href="{% static 'website/userProfile.css'%}">
 {% endblock style %} 
 {% block body %}
+{% comment %} Comments Modal {% endcomment %}
+{% for commentPost in posts_list %}
+  {% include "website/commentsModal.html" with post=commentPost %}
+{% endfor %}
 
- <!-- {{user.first_name}}
-{{user.last_name}}
-{{user.profile.gender}}
-{{user.profile.birth_date}}  -->
     {% include 'website/sidepanel.html' %}
 
 
     
     <div class="grey-panel">
         <div>
-            <img class="picture" src="{{p_form.instance.profile_picture.url}}" alt="">
+            <img class="picture" src="/media/{{otherUser.profile.profile_picture}}" alt="">
+            <h2 class="text-center mt-3" style="color: white">{{otherUser.first_name}}<span> {{otherUser.last_name}}</span></h2>
+            <div class="text-center">
+            <a href="{% url "userProfile" username=otherUser.username %}">@{{otherUser.username}}</a>
+            </div>
+            <h2 class="mt-5 ml-2" style="color: white">
+            Emotions
+            </h2>
+            <div class="row mt-4">
+            {% for emo in userEmotions %}
+              <div class="ml-2 col-3">
+                <span class="emotion p-2 mr-1 {{emo}}">{{emo}}</span>
+              </div>
+            {% endfor %}
+            </div>
         </div>
 
     </div>
     <div class="next-plane">
-        <div>
-            <form action="">
+        <div> 
+  {% if otherUser == user %}
+            <form method="post">
                 {% csrf_token %}
                 <div>
-                    <img class="picture1" src="{{p_form.instance.profile_picture.url}}" alt="">
-                    <span class="postques">What's on your Mind?</span>
+                  <img class="picture1" src="/media/{{otherUser.profile.profile_picture}}" alt="">
+                </div>
                     <div class="username1">
-                        <a href="" style="color: #2E2D2C;">@{{user.username}}</a>
+                        <a href="{% url "userProfile" username=otherUser.username %}">@{{otherUser.username}}</a>
                         {{post_form.content}}
-                        <button type="submit" class="button1">Post</button>
-                    </div>
+                       <button type="submit" class="button1 postEmotion">Post</button>
                     
                 </div>
+   {% endif %}     
             </form>
         </div>
-        
         {% for post in posts_list %}
-        <div class="postContainer row my-2 mt-3">
+        <div class="postContainer profPost row my-2 mt-3">
           <div class="col-3 text-center">
             <div>
               <img src="/media/{{post.user.profile.profile_picture}}" class="profile_image"></img>
@@ -75,3 +89,113 @@
     
 
 {% endblock body %}
+{% block jquery %}
+
+jQuery(document).on('click', ".fa-volume-up", function(){
+    let speech = new SpeechSynthesisUtterance();
+  speech.lang = "en";
+  var $this = $(this);
+  speech.text = $this.attr('id');
+  window.speechSynthesis.speak(speech);
+});
+
+$(document).ready(function() {
+  $(function(){
+    {% for post in posts_list %}
+      {% for liked in post.like_set.all %}
+              {% if user.id == liked.user.id%}
+                  $("#post-"+{{ post.id|stringformat:"i"}}).removeClass("far");
+                  $("#post-"+{{ post.id|stringformat:"i"}}).addClass("fas");
+              {% endif %}
+      {% endfor %}
+    {% endfor %}
+  });
+});
+
+  function like(post_id) {
+    if($('.far').is("#post-"+post_id.toString()+".far")){
+       $("#post-"+post_id.toString()).removeClass("far").addClass("fas");
+        $.ajax({
+        type:'POST',
+        url:'{% url "likePost" pk=12 %}'.replace(/12/, post_id.toString()),
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: ''
+        }
+    });
+    } else {
+      $("#post-"+post_id.toString()).removeClass("fas").addClass("far");
+       $.ajax({
+        type:'POST',
+        url:'{% url "unlikePost" pk=12 %}'.replace(/12/, post_id.toString()),
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: ''
+        }
+    });
+    }
+  }
+
+  function postComment(post_id){
+    var comment = $('#floatingInput'+post_id.toString()).val();
+    try{
+       $.ajax({
+        type: 'POST',
+        url: '{% url "postComment" %}',
+        data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: '',
+            comment: comment,
+            post_id: post_id
+        },
+        success: function(){
+
+        }
+       });
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/'
+            + post_id.toString()
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            
+            var html = [    $('<div/>',{ "class": "row modalComments mt-2 mb-3"}).append([
+                            $('<div/>',{ "class": "col-2 text-center" }).append([$('<img/>',{"height":40,"width":40,"src":"/media/"+data.picture})]),
+                            $('<div/>',{ "class": "username"}).append([$('<a/>',{ "href": "{% url "userProfile" username=12 %}".replace(/12/, data.username)}).text("@"+data.username),$('<div/>').text(data.message)])
+                            ])
+                        ]
+            $( ".modal-body"+post_id.toString()).append(html);
+            $(".noComments").remove()
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        const handleSend = () => {
+            if (chatSocket.readyState === WebSocket.OPEN){
+                chatSocket.send(JSON.stringify({
+                    'message': comment,
+                    'picture':'{{request.user.profile.profile_picture}}',
+                    'username':'{{request.user.username}}'
+                }));
+                $('#floatingInput'+post_id.toString()).val('');
+            } else {
+                // Queue a retry
+                setTimeout(() => { handleSend() }, 1000)
+            }
+            };
+            const message = comment;
+            handleSend(message);
+
+    } catch(e){
+      console.log("errorrrrrr",e.message)
+    }
+  }
+
+{% endblock jquery %}
